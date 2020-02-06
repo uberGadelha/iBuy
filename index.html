@@ -29,8 +29,15 @@
          <div class="form-group">
             <input id="value" placeholder="Value" type="text" class="form-control">
          </div>
-   
-         <button type="button" class="btn btn-default" onclick="addData()">
+         <span id="btnUpdate" style="display: none;">
+            <button type="button" class="btn btn-success" onclick="updateData()">
+               <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-danger" onclick="resetForm()">
+               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
+            </button>
+         </span>
+         <button id="btnAdd" type="button" class="btn btn-success" onclick="addData()">
             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
          </button>
       </div>
