@@ -14,9 +14,9 @@ function getTotal(list) {
 }
 
 function setList(list) {
-   var table = '<thead><tr><th>Description</th><th>Amount</th><th>Value</th><th>Action</th></tr></thead><tbody>';
+   var table = '<thead><tr><th>Description</th><th>Amount</th><th>Unit Value</th><th>Total</th><th>Action</th></tr></thead><tbody>';
    for(var key in list) {
-      table += '<tr><td>' + formatDesc(list[key].description) + '</td><td>' + list[key].amount + '</td><td>' + formatValue(list[key].value) + '</td><td><button class="btn btn-secondary" onclick="setUpdate(' + key + ')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button> <button class="btn btn-danger" onclick="deleteData('+ key + ');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td></tr>';
+      table += '<tr><td>' + formatDesc(list[key].description) + '</td><td>' + formatAmount(list[key].amount) + '</td><td>' + formatValue(list[key].value) + '</td><td>R$ 00,00</td><td><button class="btn btn-secondary" onclick="setUpdate(' + key + ')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button> <button class="btn btn-danger" onclick="deleteData('+ key + ');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td></tr>';
    }
    table += '</body>';
    document.getElementById("listTable").innerHTML = table;
@@ -35,7 +35,14 @@ function formatValue(value) {
    return str;
 }
 
+function formatAmount(amount) {
+   return parseInt(amount);
+}
+
 function addData() {
+   if(!validation()) {
+      return;
+   }
    var desc = document.getElementById("desc").value;
    var amount = document.getElementById("amount").value;
    var value = document.getElementById("value").value;
@@ -63,9 +70,13 @@ function resetForm() {
    document.getElementById("btnAdd").style.display = "inline-block";
 
    document.getElementById("inputIDUpdate").innerHTML = "";
+   document.getElementById("errors").style.display = "none";
 }
 
 function updateData(){
+   if (!validation()) {
+      return;
+   }
    var id = document.getElementById("idUpdate").value;
    var desc = document.getElementById("desc").value;
    var amount = document.getElementById("amount").value;
@@ -88,6 +99,39 @@ function deleteData(id) {
          list = arrAuxIni.concat(arrAuxEnd);
       }
       setList(list);
+   }
+}
+
+function validation() {
+   var desc = document.getElementById("desc").value;
+   var amount = document.getElementById("amount").value;
+   var value = document.getElementById("value").value;
+   var errors = "";
+
+   document.getElementById("errors").style.display = "none";
+
+   if (desc === "") {
+      errors += '<p><span class="glyphicon glyphicon-warning-sign alert alert-warning" aria-hidden="true" role="alert"> Oops! It looks like you forgot to add the item name :)</span></p>';
+   }
+
+   if (amount === "") {
+      errors += '<p><span class="glyphicon glyphicon-warning-sign alert alert-warning" aria-hidden="true" role="alert"> How many of this product do you need?</span></p>';
+   } else if (amount != parseInt(amount)) {
+      errors += '<p><span class="glyphicon glyphicon-warning-sign alert alert-warning" aria-hidden="true" role="alert"> The value entered is invalid :(</span></p>';
+   }
+
+   if (value === "") {
+      errors += '<p><span class="glyphicon glyphicon-warning-sign alert alert-warning" aria-hidden="true" role="alert"> What is the price of this item?</span></p>';
+   } else if (value != parseFloat(value)) {
+      errors += '<p><span class="glyphicon glyphicon-warning-sign alert alert-warning" aria-hidden="true" role="alert"> The value entered is invalid :(</span></p>';
+   }
+
+   if(errors != "") {
+      document.getElementById("errors").style.display = "block";
+      document.getElementById("errors").innerHTML = "<br>" + errors;
+      return 0;
+   } else {
+      return 1;
    }
 }
 
