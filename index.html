@@ -38,9 +38,17 @@
                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
             </button>
          </span>
-         <button id="btnAdd" type="button" class="btn btn-success" onclick="addData()">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-         </button>
+         <span id="btnAdd">
+            <button type="button" class="btn btn-success" onclick="addData()">
+               <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-primary" onclick="resetForm()">
+               <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-danger" onclick="redoList()">
+               <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+            </button>
+         </span>
       </div>
 
       <div id="errors" style="display: none;"></div>

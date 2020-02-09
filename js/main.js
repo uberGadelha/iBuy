@@ -9,6 +9,7 @@ function getTotal(list) {
    var total = 0;
    for(var key in list) {
       total += list[key].value * list[key].amount;
+      unit = list[key].value * list[key].amount;
    }
    document.getElementById("totValue").innerHTML = formatValue(total);
 }
@@ -50,6 +51,7 @@ function addData() {
 
    list.unshift({"description":desc, "amount":amount, "value":value});
    setList(list);
+   resetForm();
 }
 
 function setUpdate(id) {
@@ -100,6 +102,14 @@ function deleteData(id) {
          list = arrAuxIni.concat(arrAuxEnd);
       }
       setList(list);
+   }
+}
+
+function redoList() {
+   if(confirm("Do you want to redo your list?")) {
+      list = [];
+      setList(list);
+      alert("List deleted :)");
    }
 }
 
