@@ -16,7 +16,7 @@ function getTotal(list) {
 function setList(list) {
    var table = '<thead><tr><th>Description</th><th>Amount</th><th>Value</th><th>Action</th></tr></thead><tbody>';
    for(var key in list) {
-      table += '<tr><td>' + formatDesc(list[key].description) + '</td><td>' + list[key].amount + '</td><td>' + formatValue(list[key].value) + '</td><td><button class="btn btn-secondary" onclick="setUpdate(' + key + ')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button> <button class="btn btn-danger" onclick="setUpdate(' + key + ')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td></tr>';
+      table += '<tr><td>' + formatDesc(list[key].description) + '</td><td>' + list[key].amount + '</td><td>' + formatValue(list[key].value) + '</td><td><button class="btn btn-secondary" onclick="setUpdate(' + key + ')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button> <button class="btn btn-danger" onclick="deleteData('+ key + ');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td></tr>';
    }
    table += '</body>';
    document.getElementById("listTable").innerHTML = table;
@@ -74,7 +74,21 @@ function updateData(){
    list[id] = {"description":desc, "amount": amount, "value":value };
    resetForm();
    setList(list);
+}
 
+function deleteData(id) {
+   if(confirm("Do you really want to delete the item from your list?")) {
+      if (id===list.length-1) {
+         list.pop();
+      } else if (id===0) {
+         list.shift();
+      } else {
+         var arrAuxIni = list.slice(0, id);
+         var arrAuxEnd = list.slice(id + 1);
+         list = arrAuxIni.concat(arrAuxEnd);
+      }
+      setList(list);
+   }
 }
 
 setList(list);
