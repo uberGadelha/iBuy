@@ -1,9 +1,5 @@
 
-var list = [
-   {"description":"rice", "amount":"1", "value":"5.40"},
-   {"description":"beer", "amount":"12", "value":"1.99"},
-   {"description":"meat", "amount":"1", "value":"15.00"}
-];
+var list = [];
 
 function getTotal(list) {
    var total = 0;
@@ -21,7 +17,9 @@ function setList(list) {
    }
    table += '</body>';
    document.getElementById("listTable").innerHTML = table;
+   
    getTotal(list);
+   saveListStorage(list)
 }
 
 function formatDesc(description) {
@@ -146,4 +144,17 @@ function validation() {
    }
 }
 
-setList(list);
+function saveListStorage(list) {
+   var jsonStr = JSON.stringify(list);
+   localStorage.setItem("list", jsonStr);
+}
+
+function initListStorage() {
+   var testList = localStorage.getItem("list");
+   if (testList) {
+      list = JSON.parse(testList);
+   }
+   setList(list);
+}
+
+initListStorage();
